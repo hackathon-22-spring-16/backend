@@ -1,0 +1,30 @@
+version: '3'
+
+services:
+  server:
+    build:
+      context: ./
+      dockerfile: ./Dockerfile
+    restart: always
+    environment:
+      PORT: ${PORT}
+      MARIADB_HOSTNAME: backend-mariadb-1
+    volumes:
+      - ./:/go/src/github.com/hackathon-22-spring-16/backend
+    expose:
+      - "80"
+      - "6060"
+    ports:
+      - "3000:3000"
+    depends_on:
+      - mariadb
+
+  mariadb:
+    image: mariadb:latest
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: 22hack16
+    command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_general_ci
+    volumes:
+      - ./mysql/data:/var/lib/mysql:z
+      - ./mysql/init:/docker-entrypoint-initdb.d:z
