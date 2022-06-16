@@ -1,5 +1,9 @@
 package model
 
+import (
+	"context"
+)
+
 // | USER_NAME   | HASH    | PLAIN_CODE | STDIN    | TITLE       | OPTIONS  | CREATED_AT |
 // | ----------- | ------- | ---------- | -------- | ----------- | -------- | --- |
 // | VARCHAR(32) | CHAR(8) | TEXT       | TEXT     | VARCHAR(64) | TEXT     | TIMESTAMP |
@@ -12,4 +16,12 @@ type Code struct {
 	Stdin     string
 	Title     string
 	Options   string
+}
+
+func AddCode(ctx context.Context, code *Code) error {
+	return nil
+}
+
+func GetCode(ctx context.Context, userName string, hash string) (*Code, error) {
+	return nil, nil
 }
