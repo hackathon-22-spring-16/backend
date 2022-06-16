@@ -13,6 +13,3 @@ internal: soft
 #   TODO
 
 use_mariadb: true
-
-branch:
-  main:
