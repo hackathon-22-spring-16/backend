@@ -8,7 +8,7 @@ entrypoint: ./main
 http_proxy: 3000
 
 https: hard
-
+internal: soft
 # cname:
 #   TODO
 

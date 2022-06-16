@@ -1,6 +1,7 @@
 package router
 
 import (
+	"fmt"
 	"net/http"
 	"os"
 
@@ -11,6 +12,10 @@ func SetRouting() {
 	e := echo.New()
 	e.GET("/ping", func(c echo.Context) error {
 		return c.String(http.StatusOK, "pong")
+	})
+	e.GET("/echo", func(c echo.Context) error {
+		header := fmt.Sprintf("%#v", c.Request().Header)
+		return c.String(http.StatusOK, header)
 	})
 
 	port := os.Getenv("PORT")
