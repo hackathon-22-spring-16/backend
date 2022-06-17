@@ -15,10 +15,10 @@ func GetCodeHandler(c echo.Context) error {
 	code, err := model.GetCode(c.Request().Context(), username, hash)
 
 	if err != nil {
-		return c.String(http.StatusNotFound, "Not Found")
+		return echo.NewHTTPError(http.StatusNotFound, "Not Found")
 	}
 	if code == nil {
-		return c.String(http.StatusInternalServerError, "GetCode が実装されてないよ")
+		return echo.NewHTTPError(http.StatusInternalServerError, "Internal Server Error")
 	}
 	return c.JSON(200, &code)
 }
