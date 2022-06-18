@@ -9,7 +9,7 @@ http_proxy: 3000
 
 https: hard
 internal: soft
-# cname:
-#   TODO
+
+cname: brain-t.api.trap.games
 
 use_mariadb: true
