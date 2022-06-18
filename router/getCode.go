@@ -24,8 +24,5 @@ func GetCodeHandler(c echo.Context) error {
 	if err != nil {
 		return echo.NewHTTPError(http.StatusNotFound, "Not Found")
 	}
-	if code == nil {
-		return echo.NewHTTPError(http.StatusInternalServerError, "Internal Server Error")
-	}
 	return c.JSON(200, getCodeResponse{code.PlainCode, code.Stdin, code.Title, code.Options})
 }

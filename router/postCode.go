@@ -36,21 +36,20 @@ func PostCodeHandler(c echo.Context) error {
 
 	code := model.Code{
 		UserName:  userName,
-		Hash:      "",
 		PlainCode: data.PlainCode,
 		Stdin:     data.Stdin,
 		Title:     data.Title,
 		Options:   data.Options,
 	}
 
-	err = model.AddCode(c.Request().Context(), &code)
+	hash, err := model.AddCode(c.Request().Context(), &code)
 	if err != nil {
 		return echo.NewHTTPError(http.StatusInternalServerError, fmt.Errorf("%w", err))
 	}
 
 	res := postCodeResponse{
 		UserName: userName,
-		Hash:     code.Hash,
+		Hash:     hash,
 	}
 
 	return c.JSON(http.StatusOK, res)
