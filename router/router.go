@@ -24,6 +24,7 @@ func SetRouting() {
 		return c.String(http.StatusOK, header)
 	})
 	e.POST("/share", PostCodeHandler)
+	e.GET("/get-code/:username/:hash", GetCodeHandler)
 
 	port := os.Getenv("PORT")
 	if port == "" {
