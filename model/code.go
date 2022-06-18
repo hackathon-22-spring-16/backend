@@ -34,7 +34,7 @@ func AddCode(ctx context.Context, code *Code) (hash string, err error) {
 	for i := 0; i < 10; i++ {
 		h := makeHash()
 		c := 0
-		err := db.SelectContext(
+		err := db.GetContext(
 			ctx,
 			&c,
 			"SELECT COUNT(*) FROM codes WHERE `user_name` = ? AND `hash` = ?",
@@ -51,7 +51,7 @@ func AddCode(ctx context.Context, code *Code) (hash string, err error) {
 			ctx,
 			"INSERT INTO codes "+
 				"(`user_name`, `hash`, `plain_code`, `stdin`, `title`, `options`) "+
-				"VALUES (?, ?, ?, ?, ?, ?) WHERE NOT EXIST",
+				"VALUES (?, ?, ?, ?, ?, ?)",
 			code.UserName,
 			h,
 			code.PlainCode,
@@ -73,7 +73,7 @@ func GetCode(ctx context.Context, userName string, hash string) (Code, error) {
 		ctx,
 		&c,
 		"SELECT `user_name`, `plain_code`, `stdin`, `title`, `options` "+
-			"FROM 22hack16 "+
+			"FROM codes "+
 			"WHERE `user_name` = ? AND `hash` = ?",
 		userName,
 		hash,
