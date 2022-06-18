@@ -37,7 +37,7 @@ func AddCode(ctx context.Context, code *Code) (hash string, err error) {
 		err := db.SelectContext(
 			ctx,
 			&c,
-			"SELECT COUNT(*) FORM codes WHERE `user_name` = ? AND `hash` = ?",
+			"SELECT COUNT(*) FROM codes WHERE `user_name` = ? AND `hash` = ?",
 			code.UserName,
 			h,
 		)
@@ -49,7 +49,9 @@ func AddCode(ctx context.Context, code *Code) (hash string, err error) {
 		}
 		_, err = db.ExecContext(
 			ctx,
-			"INSERT INTO codes (`user_name`, `hash`, `plain_code`, `stdin`, `title`, `options`) VALUES (?, ?, ?, ?, ?, ?) WHERE NOT EXIST",
+			"INSERT INTO codes "+
+				"(`user_name`, `hash`, `plain_code`, `stdin`, `title`, `options`) "+
+				"VALUES (?, ?, ?, ?, ?, ?) WHERE NOT EXIST",
 			code.UserName,
 			h,
 			code.PlainCode,
