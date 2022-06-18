@@ -11,9 +11,10 @@ import (
 
 func SetRouting() {
 	e := echo.New()
+	e.Use(middleware.Logger())
 	e.Use(middleware.CORSWithConfig(middleware.CORSConfig{
-		AllowOrigins: []string{"http://front-end.hackathon-22-spring-16.trap.show"},
-		AllowMethods: []string{http.MethodGet, http.MethodPut, http.MethodPost, http.MethodDelete},
+		AllowOrigins:     []string{"http://front-end.hackathon-22-spring-16.trap.show"},
+		AllowMethods:     []string{http.MethodGet, http.MethodPut, http.MethodPost, http.MethodDelete},
 		AllowCredentials: true,
 	}))
 	e.GET("/ping", func(c echo.Context) error {
