@@ -13,11 +13,11 @@ import (
 // | PRI_KEY     | PRI_KEY | NON_NULL   | NON_NULL | NON_NULL    | NON_NULL | 自動挿入されてくれ！ |
 
 type Code struct {
-	UserName  string
-	PlainCode string
-	Stdin     string
-	Title     string
-	Options   string
+	UserName  string `db:"user_name"`
+	PlainCode string `db:"plain_code"`
+	Stdin     string `db:"stdin"`
+	Title     string `db:"title"`
+	Options   string `db:"options"`
 }
 
 func makeHash() string {
@@ -66,5 +66,25 @@ func AddCode(ctx context.Context, code *Code) (hash string, err error) {
 }
 
 func GetCode(ctx context.Context, userName string, hash string) (*Code, error) {
-	return nil, nil
+	cs := []Code{}
+	err := db.SelectContext(
+		ctx,
+		&cs,
+		"SELECT `user_name`, `plain_code`, `stdin`, `title`, `options` "+
+			"FROM 22hack16 "+
+			"WHERE `user_name` = ? AND `hash` = ?",
+		userName,
+		hash,
+	)
+	if err != nil {
+		return nil, err
+	}
+	l := len(cs)
+	if l == 0 {
+		return nil, errors.New("no matching code found")
+	}
+	if l >= 2 {
+		return nil, errors.New("multiple codes found")
+	}
+	return &cs[0], nil
 }
