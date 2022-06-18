@@ -32,7 +32,11 @@ func PostCodeHandler(c echo.Context) error {
 	if !ok {
 		return echo.NewHTTPError(http.StatusInternalServerError, "cannot get header:X-Showcase-User")
 	}
+
 	userName := userNames[0]
+	if userName == "-" {
+		return echo.NewHTTPError(http.StatusUnauthorized, "Unauthorized")
+	}
 
 	code := model.Code{
 		UserName:  userName,
