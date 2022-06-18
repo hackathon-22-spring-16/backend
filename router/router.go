@@ -23,6 +23,7 @@ func SetRouting() {
 		header := fmt.Sprintf("%#v", c.Request().Header)
 		return c.String(http.StatusOK, header)
 	})
+	e.POST("/share", PostCodeHandler)
 	e.GET("/get-code/:username/:hash", GetCodeHandler)
 
 	port := os.Getenv("PORT")
