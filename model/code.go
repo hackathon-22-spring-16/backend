@@ -67,11 +67,11 @@ func AddCode(ctx context.Context, code *Code) (hash string, err error) {
 	return "", errors.New("timeout while adding the code")
 }
 
-func GetCode(ctx context.Context, userName string, hash string) (*Code, error) {
-	cs := []Code{}
-	err := db.SelectContext(
+func GetCode(ctx context.Context, userName string, hash string) (Code, error) {
+	c := Code{}
+	err := db.GetContext(
 		ctx,
-		&cs,
+		&c,
 		"SELECT `user_name`, `plain_code`, `stdin`, `title`, `options` "+
 			"FROM 22hack16 "+
 			"WHERE `user_name` = ? AND `hash` = ?",
@@ -79,14 +79,7 @@ func GetCode(ctx context.Context, userName string, hash string) (*Code, error) {
 		hash,
 	)
 	if err != nil {
-		return nil, err
+		return c, err
 	}
-	l := len(cs)
-	if l == 0 {
-		return nil, errors.New("no matching code found")
-	}
-	if l >= 2 {
-		return nil, errors.New("multiple codes found")
-	}
-	return &cs[0], nil
+	return c, nil
 }
