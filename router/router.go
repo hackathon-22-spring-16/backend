@@ -13,7 +13,7 @@ func SetRouting() {
 	e := echo.New()
 	e.Use(middleware.Logger())
 	e.Use(middleware.CORSWithConfig(middleware.CORSConfig{
-		AllowOrigins:     []string{"http://front-end.hackathon-22-spring-16.trap.show", "https://brain-t.trap.games"},
+		AllowOrigins:     []string{"http://front-end.hackathon-22-spring-16.trap.show", "https://brain-t.trap.games", "http://brain-t.trap.games"},
 		AllowMethods:     []string{http.MethodGet, http.MethodPut, http.MethodPost, http.MethodDelete},
 		AllowCredentials: true,
 	}))
